@@ -184,6 +184,18 @@ BOOST_AUTO_TEST_SUITE(vector3_suite)
     }
 
 
+    BOOST_AUTO_TEST_CASE(angle_test)
+    {
+        auto pi = 3.14159265358979F;
+        Vector3<float> u = {1.0f, 0.0f, 0.0f};
+
+        for (auto expectedAngle = 0.0f; expectedAngle <= pi; expectedAngle += pi/6.0f)
+        {
+            Vector3<float> v = {std::cos(expectedAngle), std::sin(expectedAngle), 0.0f};
+            auto theta = u.angle(v);
+            BOOST_CHECK_CLOSE(theta, expectedAngle, 1.0e-8f);
+        }
+    }
 
 BOOST_AUTO_TEST_SUITE_END()
 
