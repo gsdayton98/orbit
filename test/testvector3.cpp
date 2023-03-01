@@ -175,7 +175,7 @@ BOOST_AUTO_TEST_SUITE(vector3_suite)
         Vector3<float> v = {0.0f, 1.0f, 0.0f};
         Vector3<float> expected = {-3.0f, 0.0f, 1.0f};
 
-        auto w = Vector3<float>::cross(u, v);
+        auto w = u.cross(v);
 
         BOOST_CHECK_CLOSE(u*w, 0.0f, 1.0e-8f);
         BOOST_CHECK_CLOSE(v*w, 0.0f, 1.0e-8f);
@@ -189,11 +189,13 @@ BOOST_AUTO_TEST_SUITE(vector3_suite)
         auto pi = 3.14159265358979F;
         Vector3<float> u = {1.0f, 0.0f, 0.0f};
 
-        for (auto expectedAngle = 0.0f; expectedAngle <= pi; expectedAngle += pi/6.0f)
+        auto expectedAngle = 0.0f;
+        while (expectedAngle <= pi)
         {
             Vector3<float> v = {std::cos(expectedAngle), std::sin(expectedAngle), 0.0f};
             auto theta = u.angle(v);
             BOOST_CHECK_CLOSE(theta, expectedAngle, 1.0e-8f);
+            expectedAngle += pi/6.0f;
         }
     }
 

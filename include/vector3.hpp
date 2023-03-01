@@ -3,8 +3,12 @@
 // Created by Glen Dayton, new account on 2/18/23.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+
 #ifndef ORBIT_VECTOR3_HPP
 #define ORBIT_VECTOR3_HPP
+
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -72,25 +76,23 @@ namespace numutil {
         { return length; }
 
         /// Return the angle between this vector and another
-        auto angle(const Vector3<ScalarType> &) -> ScalarType;
+        auto angle(const Vector3<ScalarType> &) const -> ScalarType;
 
-        [[maybe_unused]]
         /// Cross product between two vectors
-        static auto cross(const Vector3<ScalarType> &, const Vector3<ScalarType> &) -> Vector3<ScalarType>;
+        auto cross(const Vector3<ScalarType> &) const -> Vector3<ScalarType>;
 
-        [[maybe_unused]]
         /// Dot product between two vectors
-        static auto dot(const Vector3<ScalarType> &, const Vector3<ScalarType> &) -> ScalarType;
+        auto dot(const Vector3<ScalarType> &) const -> ScalarType;
 
         // binary operators can't be static member functions.
         /// Add two vectors
-        static auto add(const Vector3<ScalarType> &, const Vector3<ScalarType> &) -> Vector3<ScalarType>;
+        auto add(const Vector3<ScalarType> &) const -> Vector3<ScalarType>;
 
         /// Subtract two vectors
-        static auto sub(const Vector3<ScalarType> &, const Vector3<ScalarType> &) -> Vector3<ScalarType>;
+        auto sub(const Vector3<ScalarType> &) const -> Vector3<ScalarType>;
 
         /// Scale a vector
-        static auto multiply(ScalarType, const Vector3<ScalarType> &) -> Vector3<ScalarType>;
+        auto multiply(ScalarType) const -> Vector3<ScalarType>;
 
     private:
         vector_type v;
@@ -98,27 +100,21 @@ namespace numutil {
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     Vector3<ScalarType>::Vector3()
     { std::memset(&v, 0, 3*sizeof(ScalarType)); }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     Vector3<ScalarType>::Vector3(const ScalarType *start)
-    {
-        std::memcpy(&v, start, 3*sizeof(ScalarType));
-    }
+    { std::memcpy(&v, start, 3*sizeof(ScalarType)); }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     Vector3<ScalarType>::Vector3(std::initializer_list<ScalarType> l)
     { std::copy(l.begin(), l.end(), v); }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     auto Vector3<ScalarType>::operator+=(const Vector3<ScalarType> &right) -> Vector3<ScalarType> &
     {
         for (auto k = 0; k < length; ++k) v[k] += right.v[k];
@@ -127,7 +123,6 @@ namespace numutil {
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     auto Vector3<ScalarType>::operator-=(const Vector3<ScalarType> &right) -> Vector3<ScalarType> &
     {
         for (auto k = 0; k < length; ++k) v[k] -= right.v[k];
@@ -136,7 +131,6 @@ namespace numutil {
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     auto Vector3<ScalarType>::operator*=(const ScalarType c) -> Vector3 &
     {
         for (auto &vk: v) vk *= c;
@@ -145,15 +139,11 @@ namespace numutil {
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     auto Vector3<ScalarType>::norm() const -> ScalarType
-    {
-        return std::sqrt(*this*(*this));
-    }
+    { return std::sqrt(dot(*this)); }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     auto Vector3<ScalarType>::unit() const -> Vector3<ScalarType>
     {
         auto result{*this};
@@ -165,100 +155,83 @@ namespace numutil {
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
-    auto
-    Vector3<ScalarType>::add(const Vector3<ScalarType> &left, const Vector3<ScalarType> &right) -> Vector3<ScalarType>
+    auto Vector3<ScalarType>::add(const Vector3<ScalarType> &right) const -> Vector3<ScalarType>
     {
         Vector3<ScalarType> result;
-        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result.v[k] = left.v[k] + right.v[k];
+        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result.v[k] = v[k] + right.v[k];
         return result;
     }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
-    auto
-    Vector3<ScalarType>::sub(const Vector3<ScalarType> &left, const Vector3<ScalarType> &right) -> Vector3<ScalarType>
+    auto Vector3<ScalarType>::sub(const Vector3<ScalarType> &right) const -> Vector3<ScalarType>
     {
         Vector3<ScalarType> result;
-        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result.v[k] = left.v[k] - right.v[k];
+        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result.v[k] = v[k] - right.v[k];
         return result;
     }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
+    auto Vector3<ScalarType>::multiply(ScalarType c) const -> Vector3<ScalarType>
+    {
+        Vector3<ScalarType> result;
+        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result.v[k] = c*v[k];
+        return result;
+    }
+
+
+    template<typename ScalarType>
     auto operator+(const Vector3<ScalarType> &left, const Vector3<ScalarType> &right) -> Vector3<ScalarType>
-    {
-        return Vector3<ScalarType>::add(left, right);
-    }
+    { return left.add(right); }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
     auto operator-(const Vector3<ScalarType> &left, const Vector3<ScalarType> &right) -> Vector3<ScalarType>
-    {
-        return Vector3<ScalarType>::sub(left, right);
-    }
-
-    template<typename ScalarType>
-    auto Vector3<ScalarType>::multiply(ScalarType c, const Vector3<ScalarType> &right) -> Vector3<ScalarType>
-    {
-        Vector3<ScalarType> result;
-        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result.v[k] = c*right.v[k];
-        return result;
-    }
+    { return left.sub(right); }
 
 
     template<typename ScalarType>
     auto operator*(ScalarType c, const Vector3<ScalarType> &right) -> Vector3<ScalarType>
-    {
-        return Vector3<ScalarType>::multiply(c, right);
-    }
+    { return right.multiply(c); }
 
 
     template<typename ScalarType>
     auto operator*(const Vector3<ScalarType> &left, ScalarType c) -> Vector3<ScalarType>
-    {
-        return Vector3<ScalarType>::multiply(c, left);
-    }
+    { return left.multiply(c); }
 
 
     template<typename ScalarType>
-    auto Vector3<ScalarType>::dot(const Vector3<ScalarType> &left, const Vector3<ScalarType> &right) -> ScalarType
+    auto Vector3<ScalarType>::dot(const Vector3<ScalarType> &right) const -> ScalarType
     {
         ScalarType result = 0.0;
-        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result += left.v[k]*right.v[k];
+        for (auto k = 0; k < Vector3<ScalarType>::length; ++k) result += v[k]*right.v[k];
         return result;
     }
 
 
     template<typename ScalarType>
     auto operator*(const Vector3<ScalarType> &left, const Vector3<ScalarType> &right) -> ScalarType
-    {
-        return Vector3<ScalarType>::dot(left, right);
-    }
+    { return left.dot(right); }
 
 
     template<typename ScalarType>
-    [[maybe_unused]]
-    auto
-    Vector3<ScalarType>::cross(const Vector3<ScalarType> &left, const Vector3<ScalarType> &right) -> Vector3<ScalarType>
+    auto Vector3<ScalarType>::cross(const Vector3<ScalarType> &right) const -> Vector3<ScalarType>
     {
         Vector3<ScalarType> result;
-        result.v[0] = left.v[1]*right.v[2] - left.v[2]*right.v[1];
-        result.v[1] = left.v[2]*right.v[0] - left.v[0]*right.v[2];
-        result.v[2] = left.v[0]*right.v[1] - left.v[1]*right.v[0];
+        result.v[0] = v[1]*right.v[2] - v[2]*right.v[1];
+        result.v[1] = v[2]*right.v[0] - v[0]*right.v[2];
+        result.v[2] = v[0]*right.v[1] - v[1]*right.v[0];
         return result;
     }
 
     template<typename ScalarType>
-    [[maybe_unused]]
-    auto Vector3<ScalarType>::angle(const Vector3<ScalarType> &other) -> ScalarType
+    auto Vector3<ScalarType>::angle(const Vector3<ScalarType> &other) const -> ScalarType
     {
-        auto yVec= Vector3<ScalarType>::cross(*this, other);
-        return std::atan2(yVec.norm(), (*this)*other);
+        auto yVec = cross(other);
+        return std::atan2(yVec.norm(), dot(other));
     }
-
 }
 #endif //ORBIT_VECTOR3_HPP
+
+#pragma clang diagnostic pop
