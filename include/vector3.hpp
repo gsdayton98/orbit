@@ -4,6 +4,7 @@
 //
 
 #pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedTypeAliasInspection"
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 #ifndef ORBIT_VECTOR3_HPP
@@ -33,10 +34,10 @@ namespace numutil {
         typedef ScalarType vector_type[length];
 
         /// Element type of this instance
-        using elementType [[maybe_unused]] = ScalarType;
+        using elementType = ScalarType;
 
         // Alias for this Vector3<ScalarType> instance
-        using vectorType [[maybe_unused]] = Vector3<ScalarType>;
+        using vectorType = Vector3<ScalarType>;
 
         /// Default construct creates {0,0,0}
         Vector3();
@@ -45,7 +46,7 @@ namespace numutil {
         explicit Vector3(const ScalarType *start);
 
         /// Create a new vector from an initializer of 3 elements.
-        Vector3(std::initializer_list<ScalarType> l);
+        Vector3(const std::initializer_list<ScalarType>& l);
 
         /// Add another vector to this vector
         /// \return Vector3
@@ -110,7 +111,7 @@ namespace numutil {
 
 
     template<typename ScalarType>
-    Vector3<ScalarType>::Vector3(std::initializer_list<ScalarType> l)
+    Vector3<ScalarType>::Vector3(const std::initializer_list<ScalarType>& l)
     { std::copy(l.begin(), l.end(), v); }
 
 

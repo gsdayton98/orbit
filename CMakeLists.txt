@@ -5,8 +5,8 @@ include_directories (include)
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(HEADER_FILES include/vector3.hpp)
+set(HEADER_FILES include/vector3.hpp include/constants.hpp include/orbit.hpp)
 
-set(SOURCE_FILES source/vector3.cpp)
+set(SOURCE_FILES source/vector3.cpp source/orbit.cpp)
 
 add_library(orbit SHARED ${SOURCE_FILES} ${HEADER_FILES})
