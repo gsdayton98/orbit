@@ -1,7 +1,8 @@
 // -*- mode: c++ -*-
-//
+////
 // Created by Glen Dayton, new account on 2/18/23.
 //
+// Vector class providing basic operations for vectors.
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedTypeAliasInspection"
@@ -31,7 +32,7 @@ namespace numutil {
         static const auto length = 3;
 
         /// Array equivalent of this type
-        typedef ScalarType vector_type[length];
+        using vector_type = ScalarType[length];
 
         /// Element type of this instance
         using elementType = ScalarType;

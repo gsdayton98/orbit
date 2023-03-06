@@ -1,5 +1,9 @@
-//
+// -*- mode: c++ -*-
+////
 // Created by Glen Dayton, new account on 2/28/23.
+//
+// StateVector and KeplerianElements classes for representing an orbit and determining the Keplerian elements and
+// converting to and from a state vector of inertial position and velocity.
 //
 
 #pragma clang diagnostic push

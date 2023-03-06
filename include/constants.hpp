@@ -1,6 +1,8 @@
-//
+// -*- mode: c++ -*-
+////
 // Created by Glen Dayton, new account on 2/27/23.
 //
+// Some astrodynamic constants;=,
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"

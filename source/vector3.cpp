@@ -1,5 +1,8 @@
-//
+// -*- mode: c++ -*-
+////
 // Created by Glen Dayton, new account on 2/18/23.
+//
+// Specializations for the vector class.
 //
 #include "vector3.hpp"
 

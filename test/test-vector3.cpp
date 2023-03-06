@@ -3,7 +3,7 @@
 // @copyright 2023$
 //  Glen Dayton, new account
 //
-//  Main application entry point
+//  Main application entry point for tests
 //  
 //  @param argc The number of elements in the argv array
 //  @param argv The command line arguments passed to the
@@ -13,7 +13,6 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMacroInspection"
 #define BOOST_TEST_MODULE Test orbit
-#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MAIN  // in only one cpp file
 #pragma clang diagnostic pop
