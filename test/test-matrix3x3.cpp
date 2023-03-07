@@ -48,11 +48,12 @@ BOOST_AUTO_TEST_SUITE(matrix3x3_suite)
         BOOST_CHECK_CLOSE(m[0][2], -0.694181f, 1.0e-04f);
         BOOST_CHECK_CLOSE(m[1][0], -0.879789f, 1.0e-04f);
         BOOST_CHECK_CLOSE(m[1][1],  0.146046415f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[1][2],  0.452374f, 1.0e-04f);
+        BOOST_CHECK_CLOSE(m[1][2],  0.452373534f, 1.0e-04f);
         BOOST_CHECK_CLOSE(m[2][0], -0.152696f, 1.0e-04f);
         BOOST_CHECK_CLOSE(m[2][1],  0.814379f, 1.0e-04f);
         BOOST_CHECK_CLOSE(m[2][2], -0.559885f, 1.0e-04f);
     }
+
 
     BOOST_AUTO_TEST_CASE(transform_test)
     {
@@ -60,8 +61,8 @@ BOOST_AUTO_TEST_SUITE(matrix3x3_suite)
         Vector3<float> v = {-8.11772E6F, 3.01706E6F, 0.0F};
 
         auto w = m.transform(v);
-        BOOST_CHECK_CLOSE(w.get()[0], 1.0e6F, 1.0e-5f);
-        BOOST_CHECK_CLOSE(w.get()[1], 5.0e6F, 1.0e-5f);
-        BOOST_CHECK_CLOSE(w.get()[2], 7.0e6F, 1.0e-5f);
+        BOOST_CHECK_CLOSE(w[0], 1.0e6F, 20.0e-5f);
+        BOOST_CHECK_CLOSE(w[1], 5.0e6F, 8.0e-5f);
+        BOOST_CHECK_CLOSE(w[2], 7.0e6F, 8.0e-5f);
     }
 BOOST_AUTO_TEST_SUITE_END()

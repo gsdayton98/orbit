@@ -69,6 +69,10 @@ namespace numutil {
         /// \return Vector3<> of same type.
         auto unit() const -> Vector3<ScalarType>;
 
+        auto operator[](int n) const -> auto { return v[n]; }
+
+        auto operator[](int n) -> auto & { return v[n]; }
+
         /// Get pointer to an array of the elements of this vector.
         auto get() -> auto
         { return v; }

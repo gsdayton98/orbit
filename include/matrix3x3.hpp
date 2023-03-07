@@ -40,7 +40,7 @@ namespace numutil {
         /// Mostly used for testing purposes
         auto get() -> auto { return m; }
 
-        auto transform(const numutil::Vector3<ScalarType>&) -> numutil::Vector3<ScalarType>&;
+        auto transform(const numutil::Vector3<ScalarType>&) const -> numutil::Vector3<ScalarType>;
 
     private:
         matrix3x3type m;
@@ -73,13 +73,13 @@ namespace numutil {
     }
 
     template <typename ScalarType>
-    auto Matrix3x3<ScalarType>::transform(const numutil::Vector3<ScalarType>& v) -> numutil::Vector3<ScalarType>&
+    auto Matrix3x3<ScalarType>::transform(const numutil::Vector3<ScalarType>& v) const -> numutil::Vector3<ScalarType>
     {
         numutil::Vector3<ScalarType> result;
 
-        result.get()[0] = m[0][0]*v.get[0] + m[0][1].v.get()[1] + m[0][2]*v.get()[2];
-        result.get()[1] = m[1][0]*v.get[0] + m[1][1].v.get()[1] + m[1][2]*v.get()[2];
-        result.get()[2] = m[2][0]*v.get[0] + m[2][1].v.get()[1] + m[2][2]*v.get()[2];
+        result[0] = m[0][0]*v[0] + m[1][0]*v[1] + m[2][0]*v[2];
+        result[1] = m[0][1]*v[0] + m[1][1]*v[1] + m[2][1]*v[2];
+        result[2] = m[0][2]*v[0] + m[1][2]*v[1] + m[2][2]*v[2];
 
         return result;
     }
