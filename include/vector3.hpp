@@ -154,7 +154,7 @@ namespace numutil {
     {
         auto result{*this};
         auto magnitude = result.norm();
-        if (magnitude > 0.0) magnitude = 1.0/magnitude;
+        if (magnitude > 0.0F) magnitude = 1.0F/magnitude;
         result *= magnitude;
         return result;
     }
