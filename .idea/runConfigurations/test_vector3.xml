@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="test-vector3" type="CMakeBoostTestRunConfigurationType" factoryName="Boost Test" singleton="false" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="orbit" TARGET_NAME="test-vector3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="orbit" RUN_TARGET_NAME="test-vector3" TEST_CLASS="vector3_suite" TEST_MODE="SUITE_TEST">
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      <option name="BeforeTestRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>
