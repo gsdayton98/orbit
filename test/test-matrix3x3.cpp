@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_SUITE(matrix3x3_suite)
 
     BOOST_AUTO_TEST_CASE(default_constructor)
     {
-        Matrix3x3<float> defaultConstructed;
+        Matrix3x3<double> defaultConstructed;
 
         BOOST_CHECK_EQUAL(defaultConstructed.get()[0][0], 1.0);
         BOOST_CHECK_EQUAL(defaultConstructed.get()[0][1], 0.0);
@@ -40,29 +40,30 @@ BOOST_AUTO_TEST_SUITE(matrix3x3_suite)
 
     BOOST_AUTO_TEST_CASE(transfrom_constructor)
     {
-        Matrix3x3<float> constructed{5.289934140020225F, 2.165043638879379F, 3.3269406035854874F};
+        Matrix3x3<double> constructed{5.289934140020225, 2.165043638879379, 3.3269406035854874};
 
         auto m = constructed.get();
-        BOOST_CHECK_CLOSE(m[0][0], -0.450173f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[0][1], -0.561656f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[0][2], -0.694181f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[1][0], -0.879789f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[1][1],  0.146046415f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[1][2],  0.452373534f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[2][0], -0.152696f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[2][1],  0.814379f, 1.0e-04f);
-        BOOST_CHECK_CLOSE(m[2][2], -0.559885f, 1.0e-04f);
+        BOOST_CHECK_CLOSE(m[0][0], -0.45017252305484823, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[0][1], -0.56165649727272582, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[0][2], -0.69418058065446109, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[1][0], -0.87978897316928595, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[1][1],  0.14604637564202644, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[1][2],  0.45237353907093375, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[2][0], -0.15269597956778574, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[2][1],  0.81437855769486012, 1.0e-15);
+        BOOST_CHECK_CLOSE(m[2][2], -0.55988525841521641, 1.0e-15);
     }
 
 
     BOOST_AUTO_TEST_CASE(transform_test)
     {
-        Matrix3x3<float> m{5.289934140020225F, 2.165043638879379F, 3.3269406035854874F};
-        Vector3<float> v = {-8.11772E6F, 3.01706E6F, 0.0F};
+        Matrix3x3<double> m{5.289934140020225, 2.165043638879379, 3.3269406035854874};
+        Vector3<double> v = {-8.11772E6, 3.01706E6, 0.0};
 
         auto w = m.transform(v);
-        BOOST_CHECK_CLOSE(w[0], 1.0e6F, 20.0e-5f);
-        BOOST_CHECK_CLOSE(w[1], 5.0e6F, 8.0e-5f);
-        BOOST_CHECK_CLOSE(w[2], 7.0e6F, 8.0e-5f);
+        // Slack tolerances due to limited digits in input
+        BOOST_CHECK_CLOSE(w[0], 1.0e6, 5.0e-4);
+        BOOST_CHECK_CLOSE(w[1], 5.0e6, 5.0e-5);
+        BOOST_CHECK_CLOSE(w[2], 7.0e6, 5.0e-5);
     }
 BOOST_AUTO_TEST_SUITE_END()
