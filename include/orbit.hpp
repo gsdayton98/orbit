@@ -86,14 +86,15 @@ namespace orbit {
         auto csTrueAnomaly = std::exp(complexTrueAnomaly);
         auto perifocalRadius = ((specificMomentum * specificMomentum) / kepler.gravitationalConstant()) /
                                (1.0F + kepler.eccentricity * csTrueAnomaly.real());
-        numutil::Vector3<ScalarType> perifocalPosition{
+        numutil::Vector3<ScalarType> perifocalPosition {
                 perifocalRadius * csTrueAnomaly.real(),
                 perifocalRadius * csTrueAnomaly.imag(),
                 0.0F};
-        numutil::Vector3<ScalarType> perifocalVelocity{
+        numutil::Vector3<ScalarType> perifocalVelocity {
                 -csTrueAnomaly.imag(),
                 kepler.eccentricity + csTrueAnomaly.real(),
                 0.0F};
+        perifocalVelocity *= kepler.gravitationalConstant()/specificMomentum;
 
         numutil::Matrix3x3<ScalarType> toInertial{kepler.argumentOfPeriapsis,
                                                   kepler.inclination,
