@@ -72,7 +72,15 @@ namespace orbit {
 
         explicit KeplerianElements(const StateVector<ScalarType> &, ScalarType mu0 = orbit::muEarth);;
 
-
+        static auto semimajorAxis(ScalarType perigee, ScalarType apogee) -> auto { return (perigee + apogee)/ static_cast<ScalarType>(2.0); };
+        static auto eccentricityFromPeriApoapsis(ScalarType perigee, ScalarType apogee) -> auto { return (apogee - perigee) / (apogee + perigee); };
+        static auto period(ScalarType a, ScalarType mu = orbit::muEarth) -> auto {
+            return static_cast<ScalarType>(2.0*std::numbers::pi*std::sqrt(a*a*a/mu));
+        }
+        static auto semimajorAxisFromPeriod(ScalarType period, ScalarType mu = orbit::muEarth) -> auto {
+            auto t = 0.5*period/std::numbers::pi;
+            return std::cbrt(mu*t*t);
+        }
     private:
         const ScalarType mu;
     };
@@ -116,7 +124,12 @@ namespace orbit {
         eccentricity = e.norm();
         semiMajorAxis = h*h/(mu0*(1 - eccentricity*eccentricity));
         inclination = std::acos(angularMomentum[3]/h);
-        rightAscensionAscendingNode = std::acos(nodeVector[0]/n);
+        if (n > 0.0) {
+            rightAscensionAscendingNode = std::acos(nodeVector[0] / n);
+        }
+        else {
+            rightAscensionAscendingNode = 0.0;
+        }
         if (nodeVector[1] < 0) {
             rightAscensionAscendingNode = 2.0f*std::numbers::pi - rightAscensionAscendingNode;
         }
@@ -124,10 +137,23 @@ namespace orbit {
         if (e[2] < 0.0f) {
             argumentOfPeriapsis = 2.0f*std::numbers::pi - argumentOfPeriapsis;
         }
+
         auto rUnit = state.r.unit();
-        trueAnomaly = std::acos(e.dot(rUnit)/(eccentricity));
-        if (state.v.dot(rUnit) < 0.0f) {
-            trueAnomaly = 2.0f*std::numbers::pi - trueAnomaly;
+        if (eccentricity > 0.0) {
+            trueAnomaly = std::acos(e.dot(rUnit) / eccentricity);
+            if (state.v.dot(rUnit) < 0.0f) {
+                trueAnomaly = 2.0f*std::numbers::pi - trueAnomaly;
+            }
+        } else if (inclination > 0.0 || inclination < 0.0) {
+            trueAnomaly = std::acos(nodeVector.dot(rUnit) / n);
+            if (state.r[2] < 0) {
+                trueAnomaly = 2.0f*std::numbers::pi - trueAnomaly;
+            }
+        } else {
+            trueAnomaly = std::acos(state.r[0]/ state.r.norm());
+            if (state.v[0] > 0.0) {
+                trueAnomaly = 2.0f*std::numbers::pi - trueAnomaly;
+            }
         }
     }
 
