@@ -82,6 +82,14 @@ namespace orbit {
             return std::cbrt(mu*t*t);
         }
     private:
+        // Because of numerical imprecision return 1 if argument exceeds 1, and -1 if argument is below -1.
+        auto clamp(auto arg) -> auto {
+            auto result = arg;
+            if (result > 1.0) result = 1.0;
+            if (result < -1.0) result = -1.0;
+            return result;
+        }
+
         const ScalarType mu;
     };
 
@@ -125,7 +133,7 @@ namespace orbit {
         semiMajorAxis = h*h/(mu0*(1 - eccentricity*eccentricity));
         inclination = std::acos(angularMomentum[3]/h);
         if (n > 0.0) {
-            rightAscensionAscendingNode = std::acos(nodeVector[0] / n);
+            rightAscensionAscendingNode = std::acos(clamp(nodeVector[0] / n));
         }
         else {
             rightAscensionAscendingNode = 0.0;
@@ -133,24 +141,24 @@ namespace orbit {
         if (nodeVector[1] < 0) {
             rightAscensionAscendingNode = 2.0f*std::numbers::pi - rightAscensionAscendingNode;
         }
-        argumentOfPeriapsis = std::acos(e.dot(nodeVector)/(eccentricity*n));
+        argumentOfPeriapsis = std::acos(clamp(e.dot(nodeVector)/(eccentricity*n)));
         if (e[2] < 0.0f) {
             argumentOfPeriapsis = 2.0f*std::numbers::pi - argumentOfPeriapsis;
         }
 
         auto rUnit = state.r.unit();
         if (eccentricity > 0.0) {
-            trueAnomaly = std::acos(e.dot(rUnit) / eccentricity);
+            trueAnomaly = std::acos(clamp(e.dot(rUnit) / eccentricity));
             if (state.v.dot(rUnit) < 0.0f) {
                 trueAnomaly = 2.0f*std::numbers::pi - trueAnomaly;
             }
         } else if (inclination > 0.0 || inclination < 0.0) {
-            trueAnomaly = std::acos(nodeVector.dot(rUnit) / n);
+            trueAnomaly = std::acos(clamp(nodeVector.dot(rUnit) / n));
             if (state.r[2] < 0) {
                 trueAnomaly = 2.0f*std::numbers::pi - trueAnomaly;
             }
         } else {
-            trueAnomaly = std::acos(state.r[0]/ state.r.norm());
+            trueAnomaly = std::acos(clamp(state.r[0]/ state.r.norm()));
             if (state.v[0] > 0.0) {
                 trueAnomaly = 2.0f*std::numbers::pi - trueAnomaly;
             }

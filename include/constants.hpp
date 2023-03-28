@@ -13,10 +13,15 @@ namespace orbit {
     static const auto bigG = 6.67430e-11; // N*m^2/kg^2
     static const auto earthMass = 5.972168e24; // kg
     static const auto muEarth = bigG*earthMass;
-    static const auto earthRadius = 6371.0; // km
-    static const auto earthEquatorialRadius = 6378.137; // km
-    static const auto earthPolarRadius = 6356.752; // km
+    static const auto earthRadius = 6371.0e3; // m
+    static const auto earthEquatorialRadius = 6378.137e3; // m
+    static const auto earthPolarRadius = 6356.752e3; // m
     static const auto earthFlattening = 1.0/298.257222101;
+
+    // Canonical Units (mu = 1)
+    static const auto CDU = earthRadius;
+    static const auto VDU = 7.910e3; // m/s circular orbit speed at surface
+    static const auto TDU = 805.5; // seconds period of orbit at surface
 
     // Earth J2000 Osculating Elements
     // Unix time is loosely based on UTC(NIST) but without leap seconds.  UTC = Unix Time + leap seconds

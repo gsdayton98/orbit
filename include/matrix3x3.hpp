@@ -64,12 +64,12 @@ namespace numutil {
         m[0][2] = csInclination.imag()*csLittleOmega.imag();
 
         m[1][0] = -csBigOmega.real()*csLittleOmega.imag()- csInclination.real()*csLittleOmega.real()*csBigOmega.imag();
-        m[1][1] = csInclination.real()*csLittleOmega.real()*csBigOmega.real() - csLittleOmega.imag()*csBigOmega.imag();
-        m[1][2] = csLittleOmega.real()*csInclination.imag();
+        m[1][1] =  csInclination.real()*csLittleOmega.real()*csBigOmega.real() - csLittleOmega.imag()*csBigOmega.imag();
+        m[1][2] =  csLittleOmega.real()*csInclination.imag();
 
-        m[2][0] = csInclination.imag()*csBigOmega.imag();
+        m[2][0] =  csInclination.imag()*csBigOmega.imag();
         m[2][1] = -csBigOmega.real()*csInclination.imag();
-        m[2][2] = csInclination.real();
+        m[2][2] =  csInclination.real();
     }
 
     template <typename ScalarType>
